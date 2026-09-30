@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Explore Abdi fatah farah’s portfolio and open a project conversation",
+    "sanity": true,
+    "viewport": "desktop",
+    "covers": ["correct portfolio identity", "contact email", "WhatsApp number", "portfolio section navigation", "project showcase"],
+    "description": "Verifies the requested portfolio name, email, WhatsApp number, and project details.",
+    "steps": ["Open the portfolio", "Confirm the displayed name is Abdi fatah farah", "Confirm the email is abdifatahfarahabdi02@gmail.com", "Inspect the WhatsApp contact link and select Explore my work"],
+    "expected": "The site shows the requested name and email, the WhatsApp link uses +252612722002, and the project showcase is reachable."
+  },
+  {
+    "name": "Use navigation and theme controls on mobile",
+    "viewport": "mobile",
+    "covers": ["mobile navigation", "responsive layout", "light and dark theme"],
+    "description": "Verifies the mobile menu and theme switch remain usable on a narrow viewport.",
+    "steps": ["Open the portfolio on a mobile viewport", "Open the navigation menu", "Select About", "Switch to the light theme"],
+    "expected": "About is reachable, the menu closes after selection, and the light theme is applied."
+  },
+  {
+    "name": "Prepare a WhatsApp message from the contact form",
+    "viewport": "desktop",
+    "covers": ["contact form validation", "WhatsApp message preparation", "contact details"],
+    "description": "Verifies a valid contact message is prepared for WhatsApp and empty input is blocked.",
+    "steps": ["Submit the form empty", "Enter a name, valid email, and message", "Submit the completed form", "Inspect the WhatsApp tab"],
+    "expected": "Empty required fields are blocked; a completed message opens in WhatsApp for review before the visitor sends it."
+  },
+  {
+    "name": "Browse the supplied photo gallery",
+    "viewport": "desktop",
+    "covers": ["personal photo gallery", "ZIP portrait assets", "experience timeline"],
+    "description": "Verifies the photos from the supplied portfolio folder and the existing project timeline remain present.",
+    "steps": ["Open the Experience section", "Scroll to the personal gallery", "Inspect the portrait photographs"],
+    "expected": "The project timeline and all five photos supplied inside abdifitahporf2026 are represented in the gallery."
+  }
+]
