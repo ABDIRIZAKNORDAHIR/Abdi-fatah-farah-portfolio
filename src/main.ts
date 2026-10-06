@@ -10,9 +10,50 @@ const projectGrid = document.querySelector<HTMLElement>('#project-grid');
 const serviceGrid = document.querySelector<HTMLElement>('#service-grid');
 const timeline = document.querySelector<HTMLElement>('#timeline');
 const galleryGrid = document.querySelector<HTMLElement>('#gallery-grid');
+const repoGrid = document.querySelector<HTMLElement>('#repo-grid');
+const filterBar = document.querySelector<HTMLElement>('#project-filters');
 const escapeHtml = (value: string) => value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char] || char);
 
-if (projectGrid) projectGrid.innerHTML = portfolio.projects.map(project => '<article class="project-card reveal"><div class="project-art art-' + project.kind + '" aria-hidden="true"><span>' + project.number + '</span><i></i><b>' + project.language + '</b></div><div class="project-copy"><span class="project-tag">' + project.language + '</span><h3>' + escapeHtml(project.title) + '</h3><p>' + escapeHtml(project.description) + '</p><a href="#contact" class="project-link" aria-label="Ask about ' + escapeHtml(project.title) + '">Discuss this project <span aria-hidden="true">↗</span></a></div></article>').join('');
+const externalLink = (href: string, label: string, className: string) =>
+  '<a class="' + className + '" href="' + escapeHtml(href) + '" target="_blank" rel="noopener noreferrer">' + label + ' <span aria-hidden="true">↗</span></a>';
+
+if (projectGrid) {
+  projectGrid.innerHTML = portfolio.projects.map(project => {
+    const live = 'live' in project && project.live ? externalLink(project.live, 'Live 24/7', 'project-live') : '';
+    const github = 'github' in project && project.github ? externalLink(project.github, 'GitHub', 'project-github') : '';
+    return '<article class="project-card reveal" data-language="' + escapeHtml(project.language) + '"><div class="project-art art-' + project.kind + '" aria-hidden="true"><span>' + project.number + '</span><i></i><b>' + project.language + '</b></div><div class="project-copy"><span class="project-tag">' + project.language + '</span><h3>' + escapeHtml(project.title) + '</h3><p>' + escapeHtml(project.description) + '</p><div class="project-actions">' + live + github + '<a href="#contact" class="project-link" aria-label="Ask about ' + escapeHtml(project.title) + '">Discuss <span aria-hidden="true">↗</span></a></div></div></article>';
+  }).join('');
+}
+
+if (filterBar && projectGrid) {
+  const languages = ['All', ...new Set(portfolio.projects.map(project => project.language))];
+  filterBar.innerHTML = languages.map((language, index) =>
+    '<button type="button" class="filter-chip' + (index === 0 ? ' is-active' : '') + '" data-filter="' + escapeHtml(language) + '" aria-pressed="' + (index === 0 ? 'true' : 'false') + '">' + escapeHtml(language) + '</button>'
+  ).join('');
+  filterBar.addEventListener('click', event => {
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('.filter-chip');
+    if (!button) return;
+    const filter = button.dataset.filter || 'All';
+    filterBar.querySelectorAll<HTMLButtonElement>('.filter-chip').forEach(chip => {
+      const active = chip === button;
+      chip.classList.toggle('is-active', active);
+      chip.setAttribute('aria-pressed', String(active));
+    });
+    projectGrid.querySelectorAll<HTMLElement>('.project-card').forEach(card => {
+      const show = filter === 'All' || card.dataset.language === filter;
+      card.hidden = !show;
+      if (show) card.classList.add('is-visible');
+    });
+  });
+}
+
+if (repoGrid) {
+  repoGrid.innerHTML = portfolio.repositories.map(repo => {
+    const live = repo.live ? externalLink(repo.live, 'Open live', 'repo-live') : '';
+    return '<article class="repo-card reveal"><span class="project-tag">' + escapeHtml(repo.language) + '</span><h3>' + escapeHtml(repo.name) + '</h3><p>' + escapeHtml(repo.description) + '</p><div class="project-actions">' + live + externalLink(repo.url, 'GitHub', 'project-github') + '</div></article>';
+  }).join('');
+}
+
 if (serviceGrid) serviceGrid.innerHTML = portfolio.services.map((service, index) => '<article class="service-card reveal"><span class="service-number">0' + (index + 1) + '</span><span class="service-icon" aria-hidden="true">' + service.icon + '</span><h3>' + escapeHtml(service.title) + '</h3><p>' + escapeHtml(service.description) + '</p><a href="#contact" aria-label="Ask about ' + escapeHtml(service.title) + '">Start a conversation <span aria-hidden="true">↗</span></a></article>').join('');
 if (timeline) timeline.innerHTML = portfolio.timeline.map(item => '<article class="timeline-item reveal"><span class="timeline-date">' + item.year + ' · ' + item.language + '</span><div class="timeline-dot" aria-hidden="true"></div><div><h3>' + escapeHtml(item.title) + '</h3><p>' + escapeHtml(item.description) + '</p></div></article>').join('');
 if (galleryGrid) galleryGrid.innerHTML = portfolio.gallery.map((item, index) => '<figure class="gallery-item reveal gallery-item-' + (index + 1) + '" role="button" tabindex="0" aria-label="Open photo: ' + escapeHtml(item.alt) + '"><img src="' + portraits[item.image as keyof typeof portraits] + '" alt="' + escapeHtml(item.alt) + '" loading="lazy" decoding="async" /><figcaption>' + escapeHtml(item.label) + '</figcaption></figure>').join('');
@@ -82,6 +123,20 @@ const updateScrollUi = () => {
 };
 updateScrollUi();
 window.addEventListener('scroll', updateScrollUi, { passive: true });
+
+const clock = document.querySelector<HTMLElement>('#live-clock');
+const clockFormat = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Africa/Mogadishu',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hourCycle: 'h23'
+});
+const paintClock = () => {
+  if (clock) clock.textContent = clockFormat.format(new Date());
+};
+paintClock();
+window.setInterval(paintClock, 1000);
 
 const lightbox = document.querySelector<HTMLElement>('#lightbox');
 const lightboxImage = document.querySelector<HTMLImageElement>('#lightbox-image');
