@@ -6,7 +6,7 @@ export const portfolio = {
   whatsapp: '252612722002',
   github: 'https://github.com/ABDIRIZAKNORDAHIR',
   githubUser: 'ABDIRIZAKNORDAHIR',
-  liveUrl: 'https://abdirizaknordaahir.github.io/Abdi-fatah-farah-portfolio/',
+  liveUrl: 'https://abdirizaknordahir.github.io/Abdi-fatah-farah-portfolio/',
   technologies: ['Python', 'JavaScript', 'C', 'C++', 'C#', 'Java', 'MySQL', 'Oracle', 'MongoDB', 'HTML / CSS'],
   projects: [
     { title: 'National Registration System', language: 'Python', description: 'Identity records, search, and national registration workflows.', number: '01', kind: 'records' },
@@ -18,7 +18,7 @@ export const portfolio = {
   ],
   repositories: [
     { name: 'hormuud-projecthub', language: 'JavaScript', description: 'Hormuud University project workspace. Hosted continuously so it can be opened any time.', url: 'https://github.com/ABDIRIZAKNORDAHIR/hormuud-projecthub', live: 'https://hormuud-projecthub.vercel.app' },
-    { name: 'Abdi-fatah-farah-portfolio', language: 'TypeScript', description: 'This portfolio. Source is public, and the site is published for access around the clock.', url: 'https://github.com/ABDIRIZAKNORDAHIR/Abdi-fatah-farah-portfolio', live: 'https://abdirizaknordaahir.github.io/Abdi-fatah-farah-portfolio/' },
+    { name: 'Abdi-fatah-farah-portfolio', language: 'TypeScript', description: 'This portfolio. Source is public, and the site is published for access around the clock.', url: 'https://github.com/ABDIRIZAKNORDAHIR/Abdi-fatah-farah-portfolio', live: 'https://abdirizaknordahir.github.io/Abdi-fatah-farah-portfolio/' },
     { name: 'DISCRETE-MATHEMATICS--SEMESTER-PROJECT', language: 'Semester project', description: 'University access control that assigns roles and permissions to students, lecturers, staff, and administrators.', url: 'https://github.com/ABDIRIZAKNORDAHIR/DISCRETE-MATHEMATICS--SEMESTER-PROJECT' }
   ],
   services: [
